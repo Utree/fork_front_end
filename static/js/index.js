@@ -118,15 +118,20 @@ function search_product(product_id){
     var url = 'https://ss2019-hq.herokuapp.com';
     var path = '/api/products/';
     var headerParams = 'Content-Type: application/json';
-    var result = $.ajax({
-      url: url + path + product_id + '/',
-      type: 'GET',
-      dataType: 'json',
-      headers: headerParams,
-      async: false
-    }).responseText;
+    var modal_image = document.getElementById('modal-item-image');
+    var modal_name = document.getElementById('modal-item-name');
+    var modal_price = document.getElementById('modal-item-price');
 
-    console.log(result);
+    fetch(url + path + product_id + '/', {method: 'GET',mode: 'cors'})
+      .then(response => {
+        return response.json();
+      }).then(function(json) {
+        modal_image.src = json.img_url;
+        modal_name.innerHTML = json.name;
+        modal_price.innerHTML = json.price;
+        modal_product_id = json.p_id
 
-    return result;
+        return "flag"
+      });
+
 }
