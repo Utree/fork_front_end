@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ログイン</title>
+</head>
+<body>
+  <h2>ログイン</h2>
+
+  <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={{ channel_id }}&redirect_uri={{ redirect_url }}&state={{ random_state }}&scope=openid%20profile">
+      <img src="{{ url_for('static', filename='LineLoginButtonImage/images/DeskTop/2x/32dp/btn_login_base.png') }}"></a>
+
+</body>
+</html>
