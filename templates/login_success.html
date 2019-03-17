@@ -5,13 +5,19 @@
     <title>{{ name }}</title>
     <!-- Material Design for Bootstrap CSS -->
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Margarine" rel="stylesheet">
 </head>
 <body>
   <style>
+    body {
+      background-color: #333333;
+    }
+
     /* foodコンテナ */
     .food-container {
       display: flex;
       flex-direction: row;
+      flex-wrap:wrap;
       width: 100%;
     }
     /* カード内の文字 */
@@ -28,7 +34,9 @@
       flex-direction: column;
       border-radius: 10px;
       box-shadow: 0 2px 5px #ccc;
-      width: 50%;
+      width: 40%;
+      flex-basis:40%;
+      background-color: white;
     }
     .food-container img {
       width: 100%;
@@ -67,9 +75,12 @@
     }
     /* ------------ */
   </style>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Logo</a>
-  <button class="btn btn-outline-success" type="button" onClick="reflesh_wishlist()">Main button</button>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 150px;">
+  <a class="navbar-brand" href="#" style="font-size: 45px;font-family: 'Margarine', cursive; color: #f47742;">FORK</a>
+  <form action="/logout" method="GET">
+    <input type="hidden" name="access_token" value="{{ access_token }}">
+    <input class="btn btn-outline-success" type="submit" value="ログアウト">
+  </form>
   </nav>
 
   <button onclick="snapshot()" style="display: none;">写真撮影！</button>
@@ -85,7 +96,7 @@
       </div>
       <div class="modal-body">
         <div class="food-container">
-        <div class="card" style="width: 100%;">
+        <div class="card"  style="width: 100%;flex-basis:100%;">
             <img id="modal-item-image">
         <div class="contents">
         <h2 id="modal-item-name">ハンバーガー</h2>
@@ -107,7 +118,7 @@
   </div>
 </div>
 
-  <video id="video" width="1200px" height="800px" autoplay playsinline></video>
+  <video id="video" width="2100px" height="1400px" style="background-size: cover;background-position:center;background-repeat: no-repeat;width: 100vw;text-align: center;"autoplay playsinline></video>
   <img id="img" />
 
   <div class="food-container" id="food_list">
@@ -129,10 +140,7 @@
     <h2>{{ name }}</h2>
     <img style="border-radius:50%;width:200px;height: 200px" src="{{ picture }}"/>
   </div>
-<form action="/logout" method="GET">
-  <input type="hidden" name="access_token" value="{{ access_token }}">
-  <input type="submit" value="ログアウト">
-</form>
+
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>

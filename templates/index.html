@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ログイン</title>
+    <link href="https://fonts.googleapis.com/css?family=Margarine" rel="stylesheet">
 </head>
-<body>
-  <h2>ログイン</h2>
-
-  <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={{ channel_id }}&redirect_uri={{ redirect_url }}&state={{ random_state }}&scope=openid%20profile">
-      <img src="{{ url_for('static', filename='LineLoginButtonImage/images/DeskTop/2x/32dp/btn_login_base.png') }}"></a>
+<body style="margin-right: auto; margin-left : auto; width: 100%; text-align : center;">
+  <img src="/static/ロゴ.png">
+  <p style="font-size: 45px;font-family: 'Margarine', cursive; color: #f47742;">FORK</p>
+  <div>
+    <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={{ channel_id }}&redirect_uri={{ redirect_url }}&state={{ random_state }}&scope=openid%20profile">
+        <img src="{{ url_for('static', filename='LineLoginButtonImage/images/DeskTop/2x/32dp/btn_login_base.png') }}" ></a>
+  </div>
 
 </body>
 </html>

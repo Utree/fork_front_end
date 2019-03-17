@@ -62,7 +62,7 @@ function decode() {
 }
 // QRコードの読み取りを開始
 function startReadQR() {
-    // timer_id = setInterval('decode()', 500);
+    timer_id = setInterval('decode()', 500);
 }
 // カメラを切り替え
 function changeCamera(index) {
@@ -110,7 +110,6 @@ function setCamera() {
           alert(err);
         }
     );
-    alert("hoge");
     reflesh_wishlist();
     // QRコードの読み取りを開始
     startReadQR();
@@ -155,7 +154,6 @@ function add_wishlist() {
       console.log("added");
       $('#exampleModalCenter').modal('hide');
       reflesh_wishlist();
-      startReadQR();
       return "flag"
     });
 }
