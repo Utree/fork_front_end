@@ -9,7 +9,7 @@ app.config["SECRET_KEY"] = "sample1216"
 
 LINE_CHANNEL_ID = "1555715817"
 LINE_CHANNEL_SECRET = "eed09fb8e31fd4e41005f0400e3873c7"
-REDIRECT_URL = "https://76f5777c.ngrok.io/line/login"
+REDIRECT_URL = "https://4a4e2672.ngrok.io/line/login"
 
 @app.route("/", methods=["GET"])
 def index():
@@ -23,6 +23,7 @@ def line_login():
     print("line_id_token")
     try:
         # セッション取得
+        user_id = session['id']
         user_name = session['name']
         user_picture = session['picture']
         line_access_token = session['access_token']
@@ -42,9 +43,7 @@ def line_login():
         # トークンを取得するためにリクエストを送る
         response_post = requests.post(uri_access_token, headers=headers, data=data_params)
 
-        # 今回は"id_token"のみを使用する
         line_id_token = json.loads(response_post.text)["id_token"]
-
         line_access_token = json.loads(response_post.text)["access_token"]
 
         # ペイロード部分をデコードすることで、ユーザ情報を取得する
@@ -56,15 +55,17 @@ def line_login():
 
         print("line_id_token")
 
+        user_id = decoded_id_token["sub"]
         user_name = decoded_id_token["name"]
         user_picture = decoded_id_token["picture"]
 
         # セッション情報を書き込み
+        session["id"] = user_id
         session["name"] = user_name
         session["picture"] = user_picture
         session["access_token"] = line_access_token
 
-    return render_template("login_success.html", name=user_name, picture=user_picture, access_token=line_access_token)
+    return render_template("login_success.html", name=user_name, picture=user_picture, access_token=line_access_token, id=user_id)
 
 @app.route("/logout", methods=["GET"])
 def logout():

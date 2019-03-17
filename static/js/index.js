@@ -2,6 +2,7 @@ var ios = /iPad|iPhone|iPod/.test(navigator.userAgent);
 var devices
 var activeIndex;
 var iosRear = false;
+var url = 'https://ss2019-hq.herokuapp.com';
 
 // カメラ情報取得
 Instascan.Camera.getCameras()
@@ -61,7 +62,7 @@ function decode() {
 }
 // QRコードの読み取りを開始
 function startReadQR() {
-    timer_id = setInterval('decode()', 500);
+    // timer_id = setInterval('decode()', 500);
 }
 // カメラを切り替え
 function changeCamera(index) {
@@ -109,18 +110,21 @@ function setCamera() {
           alert(err);
         }
     );
-
+    alert("hoge");
+    reflesh_wishlist();
     // QRコードの読み取りを開始
     startReadQR();
+
+
 }
 
 function search_product(product_id){
-    var url = 'https://ss2019-hq.herokuapp.com';
     var path = '/api/products/';
-    var headerParams = 'Content-Type: application/json';
     var modal_image = document.getElementById('modal-item-image');
     var modal_name = document.getElementById('modal-item-name');
     var modal_price = document.getElementById('modal-item-price');
+    var modal_id = document.getElementById('modal-item-id');
+
 
     fetch(url + path + product_id + '/', {method: 'GET',mode: 'cors'})
       .then(response => {
@@ -129,9 +133,46 @@ function search_product(product_id){
         modal_image.src = json.img_url;
         modal_name.innerHTML = json.name;
         modal_price.innerHTML = json.price;
-        modal_product_id = json.p_id
-
+        modal_id.value = json.p_id;
+        $('#exampleModalCenter').modal('show');
         return "flag"
       });
+}
 
+function add_wishlist() {
+  var path = '/api/wishlist/';
+  var modal_id = document.getElementById('modal-item-id');
+  var user_id = document.getElementById('modal-user-id');
+  var p_id = document.getElementById('modal-item-id');
+
+
+  fetch(url + path + "?userid=" + user_id.value + "&pid=" + p_id.value, {
+    method: 'POST',
+    mode: 'cors'
+  }).then(response => {
+      return response.json();
+    }).then(function(json) {
+      console.log("added");
+      $('#exampleModalCenter').modal('hide');
+      reflesh_wishlist();
+      startReadQR();
+      return "flag"
+    });
+}
+
+function reflesh_wishlist() {
+  var path = '/api/wishlist/';
+  var user_id = document.getElementById('modal-user-id').value;
+
+  fetch(url + path + "?userid=" + user_id, {method: 'GET',mode: 'cors'})
+  .then(response => {
+      return response.json();
+    }).then(function(json) {
+      document.getElementById('food_list').textContent = null;
+      for (var i=0; i<Object.keys(json).length; i++) {
+        document.getElementById('food_list').insertAdjacentHTML('beforeend', '<div class="card"><img src="' + json[i].img_url + '"><div class="contents"><h2>' + json[i].name + '</h2><div>' + json[i].price + '</div></div></div></div>');
+      }
+
+      return "flag"
+    });
 }
