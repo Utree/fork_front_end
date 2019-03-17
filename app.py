@@ -7,9 +7,9 @@ from flask import render_template, redirect, session
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "sample1216"
 
-LINE_CHANNEL_ID = "1555715817"
-LINE_CHANNEL_SECRET = "eed09fb8e31fd4e41005f0400e3873c7"
-REDIRECT_URL = "https://4a4e2672.ngrok.io/line/login"
+LINE_CHANNEL_ID = os.environ['LINE_CHANNEL_ID']
+LINE_CHANNEL_SECRET = os.environ['LINE_CHANNEL_SECRET']
+REDIRECT_URL = os.environ['REDIRECT_URL']
 
 @app.route("/", methods=["GET"])
 def index():
